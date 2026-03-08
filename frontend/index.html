@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Página HTML</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .erro {
+      color: #b00020;
+    }
+  </style>
+</head>
+<body>
+  <h1>Lista de frutas</h1>
+
+  <p id="status"></p>
+  <ul id="lista">
+
+  </ul>
+
+  <script>
+    const statusEl = document.getElementById('status');
+    const listaEl = document.getElementById('lista');
+
+    function preencherFrutas(frutas) {
+      if (!Array.isArray(frutas)) {
+        throw new Error('"frutas" não é um array.');
+      }
+
+      for (const fruta of frutas) {
+        listaEl.innerHTML += `<li>${fruta}</li>`;
+      }
+
+      statusEl.textContent = `Total: ${frutas.length}`;
+    }
+
+    function obterFrutas() {
+      const frutas = ['Mamão', 'Pera', 'Morango'];
+        
+      return frutas;
+    }
+
+    function carregarFrutas() {
+      statusEl.textContent = 'Carregando...';
+      listaEl.innerHTML = '';
+
+      const frutas = obterFrutas();
+
+      preencherFrutas(frutas);
+    }
+
+    carregarFrutas();
+  </script>
+</body>
+</html>

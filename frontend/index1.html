@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Página HTML</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+
+      .erro {
+        color: #b00020;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Lista de frutas</h1>
+
+    <button id="btnCarregar">Carregar frutas</button>
+    <p id="status"></p>
+
+    <ul id="lista"></ul>
+
+    <script>
+      const statusEl = document.getElementById("status");
+      const listaEl = document.getElementById("lista");
+      const btn = document.getElementById("btnCarregar");
+
+      function preencherFrutas(frutas) {
+        if (!Array.isArray(frutas)) {
+          throw new Error('"frutas" não é um array.');
+        }
+
+        for (const fruta of frutas) {
+          listaEl.innerHTML += `<li>${fruta}</li>`;
+        }
+
+        statusEl.textContent = `Total: ${frutas.length}`;
+      }
+
+      function obterFrutas() {
+        // const url = 'http://localhost:8080/etec/backend/index1.php';
+        const url = "../backend/dados1.php";
+
+        return fetch(url, {
+          method: "GET",
+          headers: { Accept: "application/json" },
+          cache: "no-store",
+        })
+          .then((resp) => {
+            if (!resp.ok) {
+              throw new Error(`HTTP ${resp.status} - ${resp.statusText}`);
+            }
+            return resp.json();
+          })
+          .catch((err) => {
+            statusEl.textContent = "Erro ao carregar: " + err.message;
+            statusEl.className = "erro";
+            return []; // garante que sempre retorna um array
+          });
+      }
+
+      function carregarFrutas() {
+        statusEl.textContent = "Carregando...";
+        listaEl.innerHTML = "";
+
+        obterFrutas().then((frutas) => {
+          preencherFrutas(frutas);
+        });
+      }
+
+      btn.addEventListener("click", carregarFrutas);
+    </script>
+  </body>
+</html>
