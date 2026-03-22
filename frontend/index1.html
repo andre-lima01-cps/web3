@@ -42,12 +42,12 @@
       }
 
       function obterFrutas() {
-        // const url = 'http://localhost:8080/etec/backend/index1.php';
+        // const url = 'http://localhost:8080/web3/backend/dados1.php';
         const url = "../backend/dados1.php";
 
         fetch(url, {
             method: "GET",
-            headers: { Accept: "application/json" },
+            headers: { "Accept": "application/json" },
             cache: "no-store",
         })
         .then(resposta => resposta.json())
