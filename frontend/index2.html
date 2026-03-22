@@ -46,16 +46,19 @@
         // const url = 'http://localhost:8080/web3/backend/dados1.php';
         const url = '../backend/dados1.php';
 
+        // Fetch como async/await. O código aguarda a resposta antes de continuar.
         const resp = await fetch(url, {
           method: 'GET',
           headers: { 'Accept': 'application/json' },
           cache: 'no-store'
         });
 
+        // Verifica se a resposta foi bem-sucedida (status 200-299)
         if (!resp.ok) {
           throw new Error(`HTTP ${resp.status} - ${resp.statusText}`);
         }
 
+        // Converte a resposta para JSON. Se a resposta não for um JSON válido, isso lançará um erro.
         const frutas = await resp.json();
 
         return frutas;
